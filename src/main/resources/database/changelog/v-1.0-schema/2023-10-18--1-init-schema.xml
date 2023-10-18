@@ -173,7 +173,7 @@
     </changeSet>
 
     <changeSet id="create-check_friends_trigger" author="lkathary" >
-        <sql>
+        <sql endDelimiter="\nGO" splitStatements="true" stripComments="true">
             CREATE OR REPLACE TRIGGER check_friends_trigger
                 AFTER INSERT OR DELETE ON friends
                 FOR EACH ROW
