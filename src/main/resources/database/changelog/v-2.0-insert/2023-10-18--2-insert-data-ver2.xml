@@ -7,171 +7,202 @@
 
     <changeSet id="insert-into-peers-table" author="lkathary" >
         <sql>
-            INSERT INTO peers (nickname, birthday) VALUES ('lkathary', '2002-10-26');
-            INSERT INTO peers (nickname, birthday) VALUES ('rglorfin', '1988-09-26');
-            INSERT INTO peers (nickname, birthday) VALUES ('wloyd', '1999-10-09');
-            INSERT INTO peers (nickname, birthday) VALUES ('mcarb', '1998-09-08');
-            INSERT INTO peers (nickname, birthday) VALUES ('dhammer', '2000-04-16');
-            INSERT INTO peers (nickname, birthday) VALUES ('bromanyt', '1981-07-10');
+            INSERT INTO peers (nickname, birthday)
+            VALUES ('A_peer', '1990-01-01'),
+                   ('B_peer', '1991-11-01'),
+                   ('C_peer', '1993-03-03'),
+                   ('D_peer', '1994-04-04'),
+                   ('E_peer', '1995-05-05'),
+                   ('F_peer', '1996-06-06'),
+                   ('G_peer', '1997-07-07'),
+                   ('H_peer', '1998-08-08');
         </sql>
     </changeSet>
 
     <changeSet id="insert-into-tasks-table" author="lkathary" >
         <sql>
-            INSERT INTO tasks (title, parent_task, max_xp) VALUES ('C2_SimpleBashUtils', null, 250);
-            INSERT INTO tasks (title, parent_task, max_xp) VALUES ('C3_s21_string+', 'C2_SimpleBashUtils', 500);
-            INSERT INTO tasks (title, parent_task, max_xp) VALUES ('C5_s21_decimal', 'C2_SimpleBashUtils', 600);
-            INSERT INTO tasks (title, parent_task, max_xp) VALUES ('C6_s21_matrix', 'C5_s21_decimal', 200);
-            INSERT INTO tasks (title, parent_task, max_xp) VALUES ('A1_Maze', 'C6_s21_matrix', 300);
-            INSERT INTO tasks (title, parent_task, max_xp) VALUES ('A2_SimpleNavigator', 'A1_Maze', 400);
-            INSERT INTO tasks (title, parent_task, max_xp) VALUES ('CPP2_containers', 'C2_SimpleBashUtils', 350);
+            INSERT INTO tasks (title, parent_task, max_xp)
+            VALUES ('C2_SimpleBashUtils', NULL, 250),
+                   ('C3_s21_stringplus', 'C2_SimpleBashUtils', 500),
+                   ('C5_s21_decimal', 'C3_s21_stringplus', 350),
+                   ('C6_s21_matrix', 'C5_s21_decimal', 200),
+                   ('C7_SmartCalc_v1.0', 'C6_s21_matrix', 500),
+                   ('C8_3DViewer_v1.0', 'C7_SmartCalc_v1.0', 750),
+                   ('CPP1_s21_matrixplus', 'C8_3DViewer_v1.0', 300),
+                   ('D01_Linux', 'C2_SimpleBashUtils', 300);
         </sql>
     </changeSet>
 
     <changeSet id="insert-into-checks-table" author="lkathary" >
         <sql>
-            INSERT INTO checks (peer, task, date) VALUES ('rglorfin', 'C2_SimpleBashUtils', '2022-08-11');
-            INSERT INTO checks (peer, task, date) VALUES ('dhammer', 'C3_s21_string+', '2022-03-11');
-            INSERT INTO checks (peer, task, date) VALUES ('wloyd', 'A1_Maze', '2022-08-01');
-            INSERT INTO checks (peer, task, date) VALUES ('wloyd', 'C3_s21_string+', '2022-05-11');
-            INSERT INTO checks (peer, task, date) VALUES ('bromanyt', 'C2_SimpleBashUtils', '2022-04-21');
-            INSERT INTO checks (peer, task, date) VALUES ('mcarb', 'C5_s21_decimal', '2022-01-28');
-            INSERT INTO checks (peer, task, date) VALUES ('lkathary', 'C2_SimpleBashUtils', '2022-04-28');
-            INSERT INTO checks (peer, task, date) VALUES ('lkathary', 'C3_s21_string+', '2022-05-28');
-            INSERT INTO checks (peer, task, date) VALUES ('lkathary', 'C5_s21_decimal', '2022-06-28');
-            INSERT INTO checks (peer, task, date) VALUES ('bromanyt', 'CPP2_containers', '2022-04-29');
-            INSERT INTO checks (id, peer, task, date) VALUES (91, 'bromanyt', 'CPP2_containers', '2022-07-10');
-            INSERT INTO checks (id, peer, task, date) VALUES (92, 'mcarb', 'C5_s21_decimal', '2022-09-08');
+            INSERT INTO checks (peer, task, date)
+            VALUES ('A_peer', 'C2_SimpleBashUtils', '2021-10-30'),
+                   ('B_peer', 'C2_SimpleBashUtils', '2021-11-01'),
+                   ('C_peer', 'C2_SimpleBashUtils', '2021-11-03'),
+                   ('D_peer', 'C2_SimpleBashUtils', '2021-11-04'),
+                   ('E_peer', 'C2_SimpleBashUtils', '2021-11-05'),
+                   ('A_peer', 'C3_s21_stringplus', '2021-11-15'),
+                   ('B_peer', 'C3_s21_stringplus', '2021-11-15'),
+                   ('H_peer', 'C2_SimpleBashUtils', '2021-11-15'),
+                   ('A_peer', 'C5_s21_decimal', '2021-11-25'),
+                   ('A_peer', 'C6_s21_matrix', '2021-11-26'),
+                   ('A_peer', 'C7_SmartCalc_v1.0', '2021-12-01'),
+                   ('A_peer', 'C8_3DViewer_v1.0', '2021-12-10');
         </sql>
     </changeSet>
 
     <changeSet id="insert-into-p2p-table" author="lkathary" >
         <sql>
-            INSERT INTO p2p (check_id, checking_peer, state, time) VALUES (1, 'wloyd', 'Start', '9:00');
-            INSERT INTO p2p (check_id, checking_peer, state, time) VALUES (1, 'wloyd', 'Success', '9:30');
-            INSERT INTO p2p (check_id, checking_peer, state, time) VALUES (2, 'lkathary', 'Start', '13:15');
-            INSERT INTO p2p (check_id, checking_peer, state, time) VALUES (2, 'lkathary', 'Success', '14:00');
-            INSERT INTO p2p (check_id, checking_peer, state, time) VALUES (3, 'bromanyt', 'Start', '17:00');
-            INSERT INTO p2p (check_id, checking_peer, state, time) VALUES (3, 'bromanyt', 'Failure', '17:45');
-            INSERT INTO p2p (check_id, checking_peer, state, time) VALUES (4, 'mcarb', 'Start', '12:00');
-            INSERT INTO p2p (check_id, checking_peer, state, time) VALUES (4, 'mcarb', 'Success', '12:45');
-            INSERT INTO p2p (check_id, checking_peer, state, time) VALUES (6, 'dhammer', 'Start', '14:15');
-            INSERT INTO p2p (check_id, checking_peer, state, time) VALUES (7, 'lkathary', 'Start', '15:15');
-            INSERT INTO p2p (check_id, checking_peer, state, time) VALUES (7, 'rglorfin', 'Success', '16:00');
-            INSERT INTO p2p (check_id, checking_peer, state, time) VALUES (8, 'rglorfin', 'Start', '12:15');
-            INSERT INTO p2p (check_id, checking_peer, state, time) VALUES (8, 'rglorfin', 'Success', '13:00');
-            INSERT INTO p2p (check_id, checking_peer, state, time) VALUES (9, 'rglorfin', 'Start', '16:15');
-            INSERT INTO p2p (check_id, checking_peer, state, time) VALUES (9, 'rglorfin', 'Success', '17:00');
-            INSERT INTO p2p (check_id, checking_peer, state, time) VALUES (91, 'wloyd', 'Start', '19:00');
-            INSERT INTO p2p (check_id, checking_peer, state, time) VALUES (91, 'wloyd', 'Success', '19:30');
-            INSERT INTO p2p (check_id, checking_peer, state, time) VALUES (92, 'wloyd', 'Start', '19:45');
-            INSERT INTO p2p (check_id, checking_peer, state, time) VALUES (92, 'wloyd', 'Failure', '20:15');
+            INSERT INTO p2p (check_id, checking_peer, state, time)
+            VALUES (1, 'B_peer', 'Start', '12:00'),
+                   (1, 'B_peer', 'Success', '12:30'),
+                   (2, 'C_peer', 'Start', '15:00'),
+                   (2, 'C_peer', 'Success', '15:30'),
+                   (3, 'D_peer', 'Start', '19:00'),
+                   (3, 'D_peer', 'Success', '19:30'),
+                   (4, 'A_peer', 'Start', '11:00'),
+                   (4, 'A_peer', 'Failure', '11:30'),
+                   (5, 'H_peer', 'Start', '10:00'),
+                   (5, 'H_peer', 'Success', '11:00'),
+                   (6, 'G_peer', 'Start', '20:25'),
+                   (6, 'G_peer', 'Success', '21:00'),
+                   (7, 'A_peer', 'Start', '10:10'),
+                   (7, 'A_peer', 'Success', '10:40'),
+                   (8, 'E_peer', 'Start', '12:15'),
+                   (8, 'E_peer', 'Success', '12:30'),
+                   (9, 'G_peer', 'Start', '18:00'),
+                   (9, 'G_peer', 'Success', '18:30'),
+                   (10, 'B_peer', 'Start', '15:00'),
+                   (10, 'B_peer', 'Success', '15:30'),
+                   (11, 'D_peer', 'Start', '16:00'),
+                   (11, 'D_peer', 'Success', '16:50'),
+                   (12, 'H_peer', 'Start', '10:00'),
+                   (12, 'H_peer', 'Success', '11:00');
         </sql>
     </changeSet>
 
     <changeSet id="insert-into-verter-table" author="lkathary" >
         <sql>
-            INSERT INTO verter (check_id, state, time) VALUES (1, 'Start', '9:35');
-            INSERT INTO verter (check_id, state, time) VALUES (1, 'Success', '9:45');
-            INSERT INTO verter (check_id, state, time) VALUES (2, 'Start', '14:15');
-            INSERT INTO verter (check_id, state, time) VALUES (2, 'Success', '14:20');
-            INSERT INTO verter (check_id, state, time) VALUES (4, 'Start', '12:50');
-            INSERT INTO verter (check_id, state, time) VALUES (4, 'Failure', '12:55');
-            INSERT INTO verter (check_id, state, time) VALUES (8, 'Start', '13:35');
-            INSERT INTO verter (check_id, state, time) VALUES (8, 'Success', '13:45');
-            INSERT INTO verter (check_id, state, time) VALUES (9, 'Start', '17:35');
-            INSERT INTO verter (check_id, state, time) VALUES (9, 'Success', '17:45');
+            INSERT INTO verter (check_id, State, Time)
+            VALUES (1, 'Start', '12:31'),
+                   (1, 'Success', '12:35'),
+                   (2, 'Start', '15:31'),
+                   (2, 'Success', '15:35'),
+                   (3, 'Start', '19:31'),
+                   (3, 'Failure', '19:33'),
+                   (5, 'Start', '11:32'),
+                   (5, 'Success', '11:40'),
+                   (6, 'Start', '21:02'),
+                   (6, 'Success', '21:10'),
+                   (7, 'Start', '10:41'),
+                   (7, 'Success', '10:45'),
+                   (8, 'Start', '12:31'),
+                   (8, 'Success', '12:33'),
+                   (9, 'Start', '18:31'),
+                   (9, 'Success', '18:33'),
+                   (10, 'Start', '15:31'),
+                   (10, 'Success', '15:33');
         </sql>
     </changeSet>
 
     <changeSet id="insert-into-xp-table" author="lkathary" >
         <sql>
-            WITH succsess_checks AS (
-                SELECT checks.id, checks.task, p2p.state, tasks.max_xp
-                FROM checks
-                         INNER JOIN p2p ON checks.id = p2p.check_id
-                         LEFT JOIN verter ON checks.id = verter.check_id
-                         INNER JOIN tasks ON checks.task = tasks.title
-                WHERE p2p.state = 'Success' AND (verter.state = 'Success' OR verter.state is null)
-            )
-            INSERT INTO xp (check_id, xp_amount) SELECT id, (max_xp  * (1 - 0.25 * random()))::int
-                                                 FROM succsess_checks;
+            INSERT INTO xp (check_id, xp_amount)
+            VALUES (1, 250),
+                   (2, 250),
+                   (5, 250),
+                   (6, 500),
+                   (7, 500),
+                   (8, 250),
+                   (9, 350),
+                   (10, 200),
+                   (11, 500),
+                   (12, 750);
         </sql>
     </changeSet>
 
     <changeSet id="insert-into-transferred_points-table" author="lkathary" >
         <sql>
-            INSERT INTO transferred_points (checking_peer, checked_peer, points_amount) VALUES ('lkathary', 'rglorfin', 10);
-            INSERT INTO transferred_points (checking_peer, checked_peer, points_amount) VALUES ('rglorfin', 'lkathary', 8);
-            INSERT INTO transferred_points (checking_peer, checked_peer, points_amount) VALUES ('lkathary', 'wloyd', 4);
-            INSERT INTO transferred_points (checking_peer, checked_peer, points_amount) VALUES ('wloyd', 'lkathary', 2);
-            INSERT INTO transferred_points (checking_peer, checked_peer, points_amount) VALUES ('mcarb', 'wloyd', 7);
-            INSERT INTO transferred_points (checking_peer, checked_peer, points_amount) VALUES ('wloyd', 'mcarb', 8);
+            INSERT INTO transferred_points (checking_peer, checked_peer, points_amount)
+            VALUES ('B_peer', 'A_peer', 2),
+                   ('A_peer', 'B_peer', 1),
+                   ('C_peer', 'B_peer', 1),
+                   ('D_peer', 'C_peer', 1),
+                   ('A_peer', 'D_peer', 1),
+                   ('H_peer', 'E_peer', 1),
+                   ('G_peer', 'A_peer', 2),
+                   ('A_peer', 'H_peer', 1),
+                   ('H_peer', 'A_peer', 1),
+                   ('E_peer', 'H_peer', 1),
+                   ('B_peer', 'C_peer', 1),
+                   ('C_peer', 'D_peer', 1),
+                   ('A_peer', 'G_peer', 2);
         </sql>
     </changeSet>
 
     <changeSet id="insert-into-friends-table" author="lkathary" >
         <sql>
-            INSERT INTO friends (peer1, peer2) VALUES ('mcarb', 'wloyd');
-            INSERT INTO friends (peer1, peer2) VALUES ('rglorfin', 'lkathary');
-            INSERT INTO friends (peer1, peer2) VALUES ('bromanyt', 'lkathary');
-            INSERT INTO friends (peer1, peer2) VALUES ('wloyd', 'lkathary');
-            INSERT INTO friends (peer1, peer2) VALUES ('rglorfin', 'dhammer');
+            INSERT INTO friends (peer1, peer2)
+            VALUES ('A_peer', 'G_peer'),
+                   ('A_peer', 'D_peer'),
+                   ('G_peer', 'C_peer'),
+                   ('F_peer', 'B_peer'),
+                   ('H_peer', 'E_peer');
         </sql>
     </changeSet>
 
     <changeSet id="insert-into-recommendations-table" author="lkathary" >
         <sql>
-            INSERT INTO recommendations (peer, recommended_peer) VALUES ('wloyd', 'lkathary');
-            INSERT INTO recommendations (peer, recommended_peer) VALUES ('lkathary', 'rglorfin');
-            INSERT INTO recommendations (peer, recommended_peer) VALUES ('lkathary', 'wloyd');
-            INSERT INTO recommendations (peer, recommended_peer) VALUES ('mcarb', 'wloyd');
-            INSERT INTO recommendations (peer, recommended_peer) VALUES ('wloyd', 'dhammer');
-            INSERT INTO recommendations (peer, recommended_peer) VALUES ('rglorfin', 'wloyd');
-            INSERT INTO recommendations (peer, recommended_peer) VALUES ('rglorfin', 'dhammer');
+            INSERT INTO recommendations (peer, recommended_peer)
+            VALUES ('A_peer', 'B_peer'),
+                   ('B_peer', 'A_peer'),
+                   ('B_peer', 'C_peer'),
+                   ('C_peer', 'D_peer'),
+                   ('D_peer', 'A_peer'),
+                   ('E_peer', 'H_peer'),
+                   ('A_peer', 'G_peer'),
+                   ('H_peer', 'A_peer'),
+                   ('A_peer', 'H_peer'),
+                   ('H_peer', 'E_peer'),
+                   ('C_peer', 'B_peer'),
+                   ('D_peer', 'C_peer'),
+                   ('G_peer', 'A_peer');
         </sql>
     </changeSet>
 
     <changeSet id="insert-into-time_tracking-table" author="lkathary" >
         <sql>
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('wloyd', '2022-08-24', '15:00', 1);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('wloyd', '2022-08-24', '18:10', 2);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('lkathary', '2022-09-21', '12:10', 1);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('lkathary', '2022-09-21', '15:10', 2);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('lkathary', '2022-09-25', '13:55', 1);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('lkathary', '2022-09-25', '19:10', 2);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('rglorfin', '2022-09-21', '13:55', 1);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('rglorfin', '2022-09-22', '01:15', 2);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('rglorfin', current_date, '13:55', 1);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('rglorfin', current_date, '19:15', 2);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('rglorfin', current_date, '20:55', 1);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('rglorfin', current_date, '21:15', 2);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('lkathary', current_date, '10:55', 1);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('lkathary', current_date, '12:15', 2);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('wloyd', current_date, '09:00', 1);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('mcarb', current_date - 1, '23:00', 1);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('rglorfin', current_date - 1, '13:55', 1);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('rglorfin', current_date - 1, '19:15', 2);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('rglorfin', current_date - 1, '20:55', 1);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('rglorfin', current_date - 1, '21:15', 2);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('rglorfin', current_date - 1, '22:15', 1);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('rglorfin', current_date - 1, '22:45', 2);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('lkathary', current_date - 1, '10:55', 1);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('lkathary', current_date - 1, '12:15', 2);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('bromanyt', '2022-07-10', '20:55', 1);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('bromanyt', '2022-07-10', '21:15', 2);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('bromanyt', '2022-07-15', '10:15', 1);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('bromanyt', '2022-07-15', '10:45', 2);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('bromanyt', '2022-07-25', '10:55', 1);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('bromanyt', '2022-07-25', '12:15', 2);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('dhammer', '2022-04-10', '20:55', 1);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('dhammer', '2022-04-10', '21:15', 2);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('dhammer', '2022-04-15', '10:15', 1);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('dhammer', '2022-04-15', '10:45', 2);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('dhammer', '2022-04-25', '10:55', 1);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('dhammer', '2022-04-25', '11:15', 2);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('dhammer', '2022-04-25', '11:55', 1);
-            INSERT INTO time_tracking (peer, date, time, state) VALUES ('dhammer', '2022-04-25', '18:15', 2);
+            INSERT INTO time_tracking (peer, date, time, state)
+            VALUES ('C_peer', '2022-10-09', '18:32', 1),
+                   ('C_peer', '2022-10-09', '19:32', 2),
+                   ('C_peer', '2022-10-09', '20:32', 1),
+                   ('C_peer', '2022-10-09', '22:32', 2),
+                   ('D_peer', '2022-10-09', '10:32', 1),
+                   ('D_peer', '2022-10-09', '12:32', 2),
+                   ('D_peer', '2022-10-09', '13:02', 1),
+                   ('D_peer', '2022-10-09', '21:32', 2),
+                   ('E_peer', '2022-05-09', '10:32', 1),
+                   ('E_peer', '2022-05-09', '12:32', 2),
+                   ('F_peer', '2022-06-09', '11:02', 1),
+                   ('F_peer', '2022-06-09', '21:32', 2),
+                   ('A_peer', '2022-09-21', '15:00', 1),
+                   ('A_peer', '2022-09-21', '22:00', 2),
+                   ('B_peer', '2022-09-21', '08:00', 1),
+                   ('B_peer', '2022-09-21', '20:00', 2),
+                   ('D_peer', '2022-09-21', '12:00', 1),
+                   ('D_peer', '2022-09-21', '19:00', 2),
+                   ('G_peer', '2022-09-21', '18:32', 1),
+                   ('B_peer', '2022-10-10', '10:32', 1),
+                   ('B_peer', '2022-10-10', '19:32', 1),
+                   ('B_peer', '2022-10-10', '22:32', 2),
+                   ('A_peer', '2023-02-07', '08:30', 1),
+                   ('A_peer', '2023-02-07', '12:00', 2),
+                   ('D_peer', '2023-02-07', '08:30', 1),
+                   ('D_peer', '2023-02-07', '12:00', 2),
+                   ('B_peer', '2023-02-06', '10:30', 1),
+                   ('B_peer', '2023-02-06', '10:50', 2),
+                   ('B_peer', '2023-02-06', '19:32', 1),
+                   ('B_peer', '2023-02-06', '22:32', 2);
         </sql>
     </changeSet>
 

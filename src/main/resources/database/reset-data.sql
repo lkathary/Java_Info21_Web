@@ -11,4 +11,6 @@ TRUNCATE TABLE time_tracking RESTART IDENTITY CASCADE;
 
 DELETE FROM databasechangelog WHERE filename LIKE '%/v-2.0-insert/%';
 
+
+--- Checking ---
 SELECT * FROM databasechangelog;
