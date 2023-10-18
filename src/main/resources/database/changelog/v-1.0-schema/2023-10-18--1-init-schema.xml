@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="create-status-enum" author="lkathary" >
+        <sql>
+            CREATE TYPE status AS ENUM ('Start', 'Success', 'Failure');
+            CREATE CAST (character varying AS status) WITH INOUT AS ASSIGNMENT;
+        </sql>
+    </changeSet>
+
+    <changeSet id="create-peers-table" author="lkathary" >
+        <sql>
+            CREATE TABLE IF NOT EXISTS peers (
+                nickname varchar not null primary key,
+                birthday date not null
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="create-tasks-table" author="lkathary" >
+        <sql>
+            CREATE TABLE IF NOT EXISTS tasks (
+                title varchar not null primary key,
+                parent_task varchar default null,
+                max_xp int not null,
+                CHECK (max_xp >= 0),
+                constraint fk_tasks_parent_task foreign key (parent_task) references tasks (title) on delete set null
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="create-checks-table" author="lkathary" >
+        <sql>
+            CREATE TABLE IF NOT EXISTS checks (
+                id serial primary key,
+                peer varchar not null,
+                task varchar not null,
+                date date,
+                constraint fk_check_peer foreign key (peer) references peers (nickname) on delete cascade,
+                constraint fk_check_task foreign key (task) references tasks (title) on delete cascade
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="create-p2p-table" author="lkathary" >
+        <sql>
+            CREATE TABLE IF NOT EXISTS p2p (
+                id serial primary key,
+                check_id int not null,
+                checking_peer varchar not null,
+                state status not null,
+                time time,
+                constraint fk_p2p_check_id foreign key (check_id) references checks (id) on delete cascade,
+                constraint fk_p2p_checking_peer_id foreign key (checking_peer) references peers (nickname) on delete cascade
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="create-verter-table" author="lkathary" >
+        <sql>
+            CREATE TABLE IF NOT EXISTS verter (
+                id serial primary key,
+                check_id int not null,
+                state status not null,
+                time time,
+                constraint fk_p2p_verter_id foreign key (check_id) references checks (id) on delete cascade
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="create-xp-table" author="lkathary" >
+        <sql>
+            CREATE TABLE IF NOT EXISTS xp (
+                id serial primary key,
+                check_id int not null,
+                xp_amount int not null,
+                CHECK (xp_amount >= 0),
+                constraint fk_xp_check_id foreign key (check_id) references checks (id) on delete cascade
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="create-transferred_points-table" author="lkathary" >
+        <sql>
+            CREATE TABLE IF NOT EXISTS transferred_points (
+                id serial primary key,
+                checking_peer varchar not null,
+                checked_peer varchar not null,
+                points_amount int not null,
+                constraint fk_transferredpoints_checkingpeer foreign key (checking_peer) references peers (nickname) on delete cascade,
+                constraint fk_transferredpoints_checkedpeer foreign key (checked_peer) references peers (nickname) on delete cascade,
+                CHECK (points_amount > 0),
+                CHECK (checking_peer != checked_peer),
+                UNIQUE (checked_peer, checking_peer)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="create-friends-table" author="lkathary" >
+        <sql>
+            CREATE TABLE IF NOT EXISTS friends (
+                id serial primary key,
+                peer1 varchar not null,
+                peer2 varchar not null,
+                constraint fk_friends_peer1 foreign key (peer1) references peers (nickname) on delete cascade,
+                constraint fk_friends_peer2 foreign key (peer2) references peers (nickname) on delete cascade,
+                CHECK (peer1 != peer2),
+                UNIQUE (peer1, peer2)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="create-recommendations-table" author="lkathary" >
+        <sql>
+            CREATE TABLE IF NOT EXISTS recommendations (
+                id serial primary key,
+                peer varchar not null,
+                recommended_peer varchar not null,
+                constraint fk_recommendations_peer foreign key (peer) references peers (nickname) on delete cascade,
+                constraint fk_recommendations_recommendedpeer foreign key (recommended_peer) references peers (nickname) on delete cascade,
+                CHECK (peer != recommended_peer),
+                UNIQUE (peer, recommended_peer)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="create-time_tracking-table" author="lkathary" >
+        <sql>
+            CREATE TABLE IF NOT EXISTS time_tracking (
+                id serial primary key,
+                peer varchar not null,
+                date date,
+                time time,
+                state int,
+                CHECK (state IN (1, 2)),                                   -- 1 'in', 2 'out'
+                constraint fk_timetraking_peer foreign key (peer) references peers (nickname) on delete cascade
+            );
+        </sql>
+    </changeSet>
+
+<!--    Validate Friends-->
+    <changeSet id="create-fnc_check_friends" author="lkathary" >
+        <sql endDelimiter="\nGO" splitStatements="true" stripComments="true">
+            CREATE OR REPLACE FUNCTION fnc_check_friends() RETURNS TRIGGER AS $BODY$
+            BEGIN
+                IF (TG_OP = 'INSERT') THEN
+            DECLARE
+                num int := (SELECT count(id)
+                            FROM friends
+                            WHERE peer1 = NEW.peer2  AND peer2 = NEW.peer1);
+            BEGIN
+                RAISE NOTICE 'INSERT:';
+                RAISE NOTICE 'num: %', num;
+                RAISE NOTICE 'peer1: %', NEW.peer1;
+                RAISE NOTICE 'peer2: %', NEW.peer2;
+                IF (num = 0) THEN
+                    INSERT INTO friends (peer1, peer2) VALUES (NEW.peer2, NEW.peer1);
+                END IF;
+                RETURN NEW;
+            END;
+                ELSEIF (TG_OP = 'DELETE') THEN
+                    DELETE FROM friends WHERE peer1 = OLD.peer2  AND peer2 = OLD.peer1;
+                    RETURN OLD;
+                END IF;
+                RETURN NULL;
+            END;
+            $BODY$ LANGUAGE plpgsql;
+        </sql>
+    </changeSet>
+
+    <changeSet id="create-check_friends_trigger" author="lkathary" >
+        <sql>
+            CREATE OR REPLACE TRIGGER check_friends_trigger
+                AFTER INSERT OR DELETE ON friends
+                FOR EACH ROW
+                EXECUTE PROCEDURE fnc_check_friends();
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

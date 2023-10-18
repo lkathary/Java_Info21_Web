@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Peers</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<header th:insert="~{header/header :: header}"></header>
+<main>
+    <div class="container w-25 p-1">
+        <p class="text-start fs-1">Обновить</p>
+    </div>
+    <div class="container overflow-hidden w-25 p-1">
+        <form action="/timetracking/update" method="POST">
+            <input th:value="${timetracking.id}" type="hidden" name="id" required="required"/>
+            <div class="mb-3">
+                <label for="peer" class="form-label"> Пир </label>
+                <select class="form-select" name="peer" id="peer" required="required">
+                    <option th:each="it : ${peers}" th:value="${it.nickname}" th:text="${it.nickname}"
+                            th:selected="${timetracking.peer.nickname == it.nickname}"/>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="date" class="form-label"> Дата </label>
+                <input th:value="${timetracking.date}" class="form-control" name="date" type="date" min="2019-12-22" max="2023-12-31"
+                       id="date" required="required"/>
+            </div>
+            <div class="mb-3">
+                <label for="time" class="form-label"> Время </label>
+                <input th:value="${timetracking.time}" class="form-control" name="time" type="time" id="time" required="required"/>
+            </div>
+            <div class="mb-3">
+                <label for="status" class="form-label"> Статус </label>
+                <select class="form-select" name="status" id="status" >
+                    <option th:selected="${timetracking.status == 1}">1</option>
+                    <option th:selected="${timetracking.status == 2}">2</option>
+                </select>
+            </div>
+            <input class="btn btn btn-primary btn-sm" type="submit" value="Обновить"/>
+        </form>
+    </div>
+</main>
+<footer th:insert="~{/footer/footer :: footer}"></footer>
+</body>
+</html>

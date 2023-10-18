@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Operations</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<header th:insert="~{header/header :: header}"></header>
+<main>
+    <div class="container w-50 p-2">
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="col">
+                <div class="card border-secondary mb-3 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Вывод TransferredPoints</h4>
+                        <p class="card-text">Функция выводит таблицу в человекочитаемом виде - ник пира 1, ник пира 2, количество переданных пир поинтов.
+                            Количество отрицательное, если пир 2 получил от пира 1 больше поинтов.</p>
+                        <form action="/func" method="post">
+                            <input type="hidden" name="id" value=1>
+                            <input class="btn btn btn-primary btn-sm" type="submit" value="Функция №1"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-3 card h-100">
+                     <div class="card-body">
+                         <h4 class="card-title">Получение таблицы</h4>
+                         <p class="card-text">Возвращает таблицу вида: ник пользователя, название проверенного задания, количество полученного XP.
+                             В таблицу включать только задания, успешно прошедшие проверку (определять по таблице Checks).</p>
+                         <form action="/func" method="post">
+                             <input type="hidden" name="id" value=2>
+                             <input class="btn btn btn-primary btn-sm" type="submit" value="Функция №2"/>
+                         </form>
+                     </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-1 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Пиры, которые провели в кампусе целый день</h4>
+                        <p class="card-text">Функция определяюет пиров, которые не выходили из кампуса в течение всего дня.
+                            Параметры функции: день, например 12.05.2022. Возвращает только список пиров.</p>
+                        <form action="/func/3" method="post">
+                            <input type="hidden" name="id" value=3>
+                            <div class="mb-2">
+                                <label for="date" class="form-label">Дата проверки:</label>
+                                <input th:name="arg" class="form-control" type = "date" value="2022-09-21" min="2019-12-22" max="2023-12-31"
+                                       id="date" required="required"/>
+                            </div>
+                            <div class="mb-2">
+                                <input class="btn btn btn-primary btn-sm" type="submit" value="Функция №3"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-3 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Успешные и неуспешные проверки</h4>
+                        <p class="card-text">Найти процент успешных и неуспешных проверок за всё время.
+                            Формат вывода: процент успешных, процент неуспешных.</p>
+                        <form action="/proc" method="post">
+                            <input type="hidden" name="id" value=4>
+                            <input class="btn btn btn-primary btn-sm" type="submit" value="Процедура №4"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-3 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Изменения в TransferredPoints</h4>
+                        <p class="card-text">Вывод изменений в количестве пир поинтов каждого пира по таблице TransferredPoints.
+                            Результат выводится отсортированным по изменению числа поинтов.
+                            <br>Формат вывода: ник пира, изменение в количество пир поинтов.</p>
+                        <form action="/proc" method="post">
+                            <input type="hidden" name="id" value=5>
+                            <input class="btn btn btn-primary btn-sm" type="submit" value="Процедура №5"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-3 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Изменения пир пойнтов</h4>
+                        <p class="card-text">Вывод изменения в количестве пир поинтов каждого пира по таблице, возвращаемой функцией №1.
+                            Результат выводится отсортированным по изменению числа поинтов.
+                            <br>Формат вывода: ник пира, изменение в количество пир поинтов.</p>
+                        <form action="/proc" method="post">
+                            <input type="hidden" name="id" value=6>
+                            <input class="btn btn btn-primary btn-sm" type="submit" value="Процедура №6"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-3 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Самое проверяемое задание</h4>
+                        <p class="card-text">Вывод самого часто проверяемого задания за каждый день.
+                            При одинаковом количестве проверок каких-то заданий в определенный день, вывести их все.</p>
+                        <form action="/proc" method="post">
+                            <input type="hidden" name="id" value=7>
+                            <input class="btn btn btn-primary btn-sm" type="submit" value="Процедура №7"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-3 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Длительность последней проверки</h4>
+                        <p class="card-text">Определение длительности последней P2P проверки.
+                            Под длительностью подразумевается разница между временем, указанным в записи со статусом "начало",
+                            и временем, указанным в записи со статусом "успех" или "неуспех".</p>
+                        <form action="/proc" method="post">
+                            <input type="hidden" name="id" value=8>
+                            <input class="btn btn btn-primary btn-sm" type="submit" value="Процедура №8"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-2 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Выполнившие все задания</h4>
+                        <p class="card-text">Таблица всех пиров, выполнивших весь заданный блок задач и дату завершения последнего задания.
+                            Параметры процедуры: название блока, например "CPP".
+                            Результат выводится отсортированным по дате завершения.</p>
+                        <form action="/proc" method="post">
+                            <input type="hidden" name="id" value=9>
+                            <div class="mb-2">
+                                <label for="block" class="form-label">Название блока:</label>
+                                <input th:name="arg" class="form-control" type = "text" id="block" required="required"/>
+                            </div>
+                            <div class="mb-2">
+                                <input class="btn btn btn-primary btn-sm" type="submit" value="Процедура №9"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-3 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">К кому идти на проверку?</h4>
+                        <p class="card-text">Определяет, к какому пиру стоит идти на проверку каждому обучающемуся.
+                            Определение происходит&nbsp; исходя из рекомендаций друзей пира, т.е. нужно найти пира,
+                            проверяться у которого рекомендует наибольшее число друзей.</p>
+                        <form action="/proc" method="post">
+                            <input type="hidden" name="id" value=10>
+                            <input class="btn btn btn-primary btn-sm" type="submit" value="Процедура №10"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-2 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Процент пиров</h4>
+                        <p class="card-text">Показывает процент пиров, которые:
+                            <br>Приступили к блоку 1<br> Приступили к блоку 2<br> Приступили к обоим<br> Не приступили ни к одному.</p>
+                        <form action="/proc" method="post">
+                            <input type="hidden" name="id" value=11>
+                            <div class="mb-2">
+                                <label for="block1" class="form-label">Название блока 1:</label>
+                                <input th:name="arg" class="form-control" type = "text" id="block1" required="required"/>
+                            </div>
+                            <div class="mb-2">
+                                <label for="block2" class="form-label">Название блока 2:</label>
+                                <input th:name="arg" class="form-control" type = "text" id="block2" required="required"/>
+                            </div>
+                            <div class="mb-2">
+                                <input class="btn btn btn-primary btn-sm" type="submit" value="Процедура №11"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-2 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Самые дружелюбные</h4>
+                        <p class="card-text">Определяет N пиров с наибольшим числом друзей.
+                            Параметры процедуры: количество пиров N. Результат выводится отсортированным по колличеству друзей.</p>
+                        <form action="/proc" method="post">
+                            <input type="hidden" name="id" value=12>
+                            <div class="mb-2">
+                                <label for="number" class="form-label">Количество пиров:</label>
+                                <input th:name="arg" class="form-control" type="number" id="number" min="1" required="required"/>
+                            </div>
+                            <div class="mb-2">
+                                <input class="btn btn btn-primary btn-sm" type="submit" value="Процедура №12"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-3 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Проверка на ДР</h4>
+                        <p class="card-text">Показывает процент пиров, которые когда-либо успешно проходили проверку в свой день рождения.
+                            Также определите процент пиров, которые хоть раз проваливали проверку в свой день рождения.</p>
+                        <form action="/proc" method="post">
+                            <input type="hidden" name="id" value=13>
+                            <input class="btn btn btn-primary btn-sm" type="submit" value="Процедура №13"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-3 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Суммарный опыт</h4>
+                        <p class="card-text">Определяет количество XP, полученное в сумме каждым пиром.
+                            Если одна задача выполнена несколько раз, полученное за нее количество XP равно максимальному за эту задачу.</p>
+                        <form action="/proc" method="post">
+                            <input type="hidden" name="id" value=14>
+                            <input class="btn btn btn-primary btn-sm" type="submit" value="Процедура №14"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-2 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Пиры, сдавшие два задания</h4>
+                        <p class="card-text">Определяет всех пиров, которые сдали заданные задания 1 и 2, но не сдали задание 3.
+                            Параметры процедуры: названия заданий 1, 2 и 3.</p>
+                        <form action="/proc" method="post">
+                            <input type="hidden" name="id" value=15>
+                            <div class="mb-2">
+                                <label for="task1" class="form-label">Задание 1:</label>
+                                <input th:name="arg" class="form-control" type = "text" id="task1" required="required"/>
+                            </div>
+                            <div class="mb-2">
+                                <label for="task2" class="form-label">Задание 2:</label>
+                                <input th:name="arg" class="form-control" type = "text" id="task2" required="required"/>
+                            </div>
+                            <div class="mb-2">
+                                <label for="task3" class="form-label">Задание 3:</label>
+                                <input th:name="arg" class="form-control" type = "text" id="task3" required="required"/>
+                            </div>
+                            <div class="mb-2">
+                                <input class="btn btn btn-primary btn-sm" type="submit" value="Процедура №15"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-3 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Предшествующие задачи</h4>
+                        <p class="card-text">Определяет сколько задач нужно выполнить, исходя из условий входа, чтобы получить доступ к текущей.</p>
+                        <form action="/proc" method="post">
+                            <input type="hidden" name="id" value=16>
+                            <input class="btn btn btn-primary btn-sm" type="submit" value="Процедура №16"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-2 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Удачный день</h4>
+                        <p class="card-text">Определяет "удачные" для проверок дни. День считается "удачным",
+                            если в нем есть хотя бы N идущих подряд успешных проверки.
+                            Параметры процедуры: количество идущих подряд успешных проверок N.</p>
+                        <form action="/proc" method="post">
+                            <input type="hidden" name="id" value=17>
+                            <div class="mb-2">
+                                <label for="number_checked" class="form-label">Количество идущих подряд успешных проверок:</label>
+                                <input th:name="arg" class="form-control" type="number" id="number_checked" min="1" required="required"/>
+                            </div>
+                            <div class="mb-2">
+                                <input class="btn btn btn-primary btn-sm" type="submit" value="Процедура №17"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-3 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Самый умный</h4>
+                        <p class="card-text">Определяет пира с наибольшим числом выполненных заданий.
+                            <br>Формат вывода: ник пира, число выполненных заданий.</p>
+                        <form action="/proc" method="post">
+                            <input type="hidden" name="id" value=18>
+                            <input class="btn btn btn-primary btn-sm" type="submit" value="Процедура №18"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-3 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Самый опытный</h4>
+                        <p class="card-text">Определяет пира с наибольшим количеством XP.
+                            <br>Формат вывода: ник пира, количество XP.</p>
+                        <form action="/proc" method="post">
+                            <input type="hidden" name="id" value=19>
+                            <input class="btn btn btn-primary btn-sm" type="submit" value="Процедура №19"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-3 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Солнце еще высоко</h4>
+                        <p class="card-text">Определяет пира, который провел сегодня в кампусе больше всего времени.</p>
+                        <form action="/proc" method="post">
+                            <input type="hidden" name="id" value=20>
+                            <input class="btn btn btn-primary btn-sm" type="submit" value="Процедура №20"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-2 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Точность - вежливость королей</h4>
+                        <p class="card-text">Находит пиров, приходивших раньше заданного времени не менее N раз за всё время.
+                            Параметры процедуры: время, количество раз N.</p>
+                        <form action="/proc" method="post">
+                            <input type="hidden" name="id" value=21>
+                            <div class="mb-2">
+                                <label for="time" class="form-label">Время:</label>
+                                <input th:name="arg" class="form-control" type = "time" id="time" required="required"/>
+                            </div>
+                            <div class="mb-2">
+                                <label for="count" class="form-label">Количество раз:</label>
+                                <input th:name="arg" class="form-control" type="number" id="count" min="1" required="required"/>
+                            </div>
+                            <div class="mb-2">
+                                <input class="btn btn btn-primary btn-sm" type="submit" value="Процедура №21"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-2 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Мне больно видеть белый свет</h4>
+                        <p class="card-text">Находит пиров, выходивших за последние N дней из кампуса больше M раз.
+                            Параметры процедуры: количество дней N, количество раз M.</p>
+                        <form action="/proc" method="post">
+                            <input type="hidden" name="id" value=22>
+                            <div class="mb-2">
+                                <label for="days" class="form-label">Количество дней:</label>
+                                <input th:name="arg" class="form-control" type="number" id="days" min="1" required="required"/>
+                            </div>
+                            <div class="mb-2">
+                                <label for="number_of_times" class="form-label">Количество раз:</label>
+                                <input th:name="arg" class="form-control" type="number" id="number_of_times" min="1" required="required"/>
+                            </div>
+                            <div class="mb-2">
+                                <input class="btn btn btn-primary btn-sm" type="submit" value="Процедура №22"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-3 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Король ночи</h4>
+                        <p class="card-text">Определяет пира, который пришел сегодня в кампус последним.</p>
+                        <form action="/proc" method="post">
+                            <input type="hidden" name="id" value=23>
+                            <input class="btn btn btn-primary btn-sm" type="submit" value="Процедура №23"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-2 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Я только на минутку</h4>
+                        <p class="card-text">Находит пиров, которые выходили вчера из кампуса больше чем на N минут.
+                            Параметры процедуры: количество минут N.</p>
+                        <form action="/proc" method="post">
+                            <input type="hidden" name="id" value=24>
+                            <div class="mb-2">
+                                <label for="minutes" class="form-label">Количество минут:</label>
+                                <input th:name="arg" class="form-control" type="number" id="minutes" min="1" required="required"/>
+                            </div>
+                            <div class="mb-2">
+                                <input class="btn btn btn-primary btn-sm" type="submit" value="Процедура №24"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-3 card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Ранние входы</h4>
+                        <p class="card-text">Определяет для каждого месяца, сколько раз люди, родившиеся в этот месяц,
+                            приходили в кампус за всё время (общее число входов). Для каждого месяца рассчитывается,
+                            сколько раз люди, родившиеся в этот месяц, приходили в кампус раньше 12:00 за всё время (число ранних входов).
+                            Для каждого месяца подсчитывается процент ранних входов в кампус относительно общего числа входов.</p>
+                        <form action="/proc" method="post">
+                            <input type="hidden" name="id" value=25>
+                            <input class="btn btn btn-primary btn-sm" type="submit" value="Процедура №25"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-secondary mb-3 card h-100">
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:insert="~{/footer/footer :: footer}"></footer>
+</body>
+</html>

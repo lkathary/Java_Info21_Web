@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Data</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<header th:insert="~{header/header :: header}"></header>
+<main>
+    <div class="container w-50 p-2">
+        <p class="text-start fs-1">Данные</p>
+    </div>
+    <div class="container w-50 p-2">
+        <div class="row gx-5">
+            <div class="col">
+                <div class="col">
+                    <img src="/images/data.jpg" class="img-fluid">
+                </div>
+            </div>
+            <div class="col">
+                <div class="list-group">
+                    <a href="/peers" class="list-group-item border-0 list-group-item-action">Пиры</a>
+                    <a href="/tasks" class="list-group-item border-0 list-group-item-action">Задания</a>
+                    <a href="/checks" class="list-group-item border-0 list-group-item-action">Проверки</a>
+                    <a href="/peertopeer" class="list-group-item border-0 list-group-item-action">Пир проверки</a>
+                    <a href="/verter" class="list-group-item border-0 list-group-item-action">Вертер проверки</a>
+                    <a href="/xp" class="list-group-item border-0 list-group-item-action">Опыт</a>
+                    <a href="/friends" class="list-group-item border-0 list-group-item-action">Друзья</a>
+                    <a href="/recommendation" class="list-group-item border-0 list-group-item-action">Рекомендации</a>
+                    <a href="/transferredpoints" class="list-group-item border-0 list-group-item-action">Передача пир поинтов</a>
+                    <a href="/timetracking" class="list-group-item border-0 list-group-item-action">Посещения кампуса</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:insert="~{/footer/footer :: footer}"></footer>
+</body>
+</html>

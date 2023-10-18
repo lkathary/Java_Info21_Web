@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Peers</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<header th:insert="~{header/header :: header}"></header>
+<main>
+    <div class="container w-25 p-1">
+        <p class="text-start fs-1">Обновить</p>
+    </div>
+    <div class="container overflow-hidden w-25 p-1">
+        <form action="/peertopeer/update" method="POST">
+            <input th:value="${peertopeer.id}" type="hidden" name="id" required="required"/>
+            <div class="mb-3">
+                <label for="check_id" class="form-label"> id проверки </label>
+                <select class="form-select" name="check_id" id="check_id" required="required">
+                    <option th:each="it : ${checks}" th:value="${it.id}" th:text="${it.id}"
+                            th:selected="${peertopeer.check_id.id == it.id}"/>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="checkingPeer" class="form-label"> Имя проверяющего </label>
+                <select class="form-select" name="checkingPeer" id="checkingPeer" required="required">
+                    <option th:each="it : ${peers}" th:value="${it.nickname}" th:text="${it.nickname}"
+                            th:selected="${peertopeer.checkingPeer.nickname == it.nickname}"/>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="status" class="form-label"> Статус проверки </label>
+                <select class="form-select" id="status" name="status">
+                    <option th:selected="${peertopeer.status.name() == 'Start'}">Start</option>
+                    <option th:selected="${peertopeer.status.name() == 'Success'}">Success</option>
+                    <option th:selected="${peertopeer.status.name() == 'Failure'}">Failure</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="time" class="form-label"> Время </label>
+                <input th:value="${peertopeer.time}" class="form-control" name="time" type="time" id="time" required="required">
+            </div>
+            <input class="btn btn btn-primary btn-sm" type="submit" value="Обновить"/>
+        </form>
+    </div>
+</main>
+<footer th:insert="~{/footer/footer :: footer}"></footer>
+</body>
+</html>

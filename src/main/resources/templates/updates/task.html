@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Peers</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<header th:insert="~{header/header :: header}"></header>
+<main>
+    <div class="container w-25 p-1">
+        <p class="text-start fs-1">Обновить</p>
+    </div>
+    <div class="container overflow-hidden w-25 p-1">
+        <form action="/tasks/update" method="POST">
+            <div class="mb-3">
+                <label for="title" class="form-label"> Задание </label>
+                <input th:value="${task.title}" class="form-control" type="text" id="title" name="title" required="required"/>
+            </div>
+            <div class="mb-3">
+                <label for="parentTask" class="form-label"> Родительское задание </label>
+                <select class="form-select" name="parentTask" id="parentTask" required="required">
+                    <option>(null)</option>
+                    <option th:each="it : ${titles}" th:value="${it}" th:text="${it}"
+                            th:selected="${task.parentTask?.title == it}"/>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="maxExperience" class="form-label"> Максимальный опыт </label>
+                <input th:value="${task.maxExperience}" class="form-control" type="number" id="maxExperience" name="maxExperience" required="required"/>
+            </div>
+            <input class="btn btn btn-primary btn-sm" type="submit" value="Обновить"/>
+        </form>
+    </div>
+</main>
+<footer th:insert="~{/footer/footer :: footer}"></footer>
+</body>
+</html>
