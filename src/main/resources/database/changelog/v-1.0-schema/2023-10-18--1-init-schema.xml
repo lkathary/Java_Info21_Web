@@ -174,7 +174,8 @@
 
     <changeSet id="create-check_friends_trigger" author="lkathary" >
         <sql endDelimiter="\nGO" splitStatements="true" stripComments="true">
-            CREATE OR REPLACE TRIGGER check_friends_trigger
+            DROP TRIGGER IF EXISTS check_friends_trigger on friends;
+            CREATE TRIGGER check_friends_trigger
                 AFTER INSERT OR DELETE ON friends
                 FOR EACH ROW
                 EXECUTE PROCEDURE fnc_check_friends();
